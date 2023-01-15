@@ -1,5 +1,6 @@
 defmodule BinDayAsAServiceWeb.PageController do
   use BinDayAsAServiceWeb, :controller
+  require Logger
 
   def index(conn, _params) do
     render(conn, "index.html")
@@ -22,11 +23,11 @@ defmodule BinDayAsAServiceWeb.PageController do
   defp get_collection_dates_cached(postcode) do
     case BinDayAsAService.Cache.get(BinDayAsAService.Cache, postcode, Date.utc_today()) do
       {:ok, bin_details} ->
-        IO.puts("Cache hit for #{postcode}")
+        Logger.info("Cache hit for #{postcode}")
         bin_details
 
       :not_found ->
-        IO.puts("Cache miss for #{postcode}")
+        Logger.info("Cache miss for #{postcode}")
         bin_details = CouncilBinsSite.get_collection_dates(postcode)
 
         BinDayAsAService.Cache.put(
