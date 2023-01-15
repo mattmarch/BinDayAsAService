@@ -1,2 +1,8 @@
 <h2>Bin Day Details</h2>
-<%= @bin_detail_string %>
+<%= for bin <- @bin_details do %>
+    <h3><%= bin.type %></h3>
+    <ul>
+        <li>Next collection: <%= bin.next %></li>
+        <li>Following collection: <%= bin.following %></li>
+    </ul>
+<% end %>

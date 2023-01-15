@@ -13,7 +13,7 @@ defmodule BinDayAsAServiceWeb.PageController do
           render(conn, "error.html", error_string: "Postcode not found")
 
         bin_details ->
-          render(conn, "postcode_search.html", bin_detail_string: bin_details |> inspect())
+          render(conn, "postcode_search.html", bin_details: bin_details)
       end
     else
       render(conn, "error.html", error_string: "Invalid postcode")
