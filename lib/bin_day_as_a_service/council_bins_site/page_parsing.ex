@@ -1,4 +1,6 @@
 defmodule CouncilBinsSite.PageParsing do
+  alias CouncilBinsSite.CollectionDates
+
   def first_address_option_from_page(page) do
     {:ok, document} = Floki.parse_document(page)
 
