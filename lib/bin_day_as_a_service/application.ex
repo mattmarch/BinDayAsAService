@@ -13,9 +13,11 @@ defmodule BinDayAsAService.Application do
       # Start the PubSub system
       {Phoenix.PubSub, name: BinDayAsAService.PubSub},
       # Start the Endpoint (http/https)
-      BinDayAsAServiceWeb.Endpoint
+      BinDayAsAServiceWeb.Endpoint,
       # Start a worker by calling: BinDayAsAService.Worker.start_link(arg)
       # {BinDayAsAService.Worker, arg}
+      # Start the in memory postcode cache
+      {BinDayAsAService.Cache, name: BinDayAsAService.Cache}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
