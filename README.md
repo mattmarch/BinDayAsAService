@@ -1,5 +1,7 @@
 # BinDayAsAService
 
+Automating clicking through North Somerset Council's bin collection calendar every time you need to find out what bins to put out.
+
 To start your Phoenix server:
 
   * Install dependencies with `mix deps.get`
