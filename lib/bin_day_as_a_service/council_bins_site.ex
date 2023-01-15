@@ -9,19 +9,18 @@ defmodule CouncilBinsSite do
     collection_schedule_url = @base_url <> @collection_schedule_path
     cookies = Requests.get_cookies(collection_schedule_url)
 
-    address_urpn =
-      Requests.get_address_list_page(collection_schedule_url, cookies, postcode)
-      |> PageParsing.first_address_option_from_page()
-
-    result_path =
-      Requests.get_address_submission_redirect(
-        collection_schedule_url,
-        cookies,
-        postcode,
-        address_urpn
-      )
-
-    Requests.get_result_page(@base_url <> result_path, cookies)
-    |> PageParsing.parse_results_page()
+    with {:ok, address_urpn} <-
+           Requests.get_address_list_page(collection_schedule_url, cookies, postcode)
+           |> PageParsing.first_address_option_from_page(),
+         result_path <-
+           Requests.get_address_submission_redirect(
+             collection_schedule_url,
+             cookies,
+             postcode,
+             address_urpn
+           ),
+         do:
+           Requests.get_result_page(@base_url <> result_path, cookies)
+           |> PageParsing.parse_results_page()
   end
 end

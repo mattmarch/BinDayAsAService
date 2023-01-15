@@ -4,12 +4,14 @@ defmodule CouncilBinsSite.PageParsing do
   def first_address_option_from_page(page) do
     {:ok, document} = Floki.parse_document(page)
 
-    [{"select", _select_node, address_options}] =
-      document
-      |> Floki.find("select#SelectedUprn")
+    case document |> Floki.find("select#SelectedUprn") do
+      [{"select", _select_node, address_options}] ->
+        {"option", [{"value", first_urpn}], _address} = address_options |> hd()
+        {:ok, first_urpn}
 
-    {"option", [{"value", first_urpn}], _address} = address_options |> hd()
-    first_urpn
+      _ ->
+        :postcode_not_found
+    end
   end
 
   def parse_results_page(page) do

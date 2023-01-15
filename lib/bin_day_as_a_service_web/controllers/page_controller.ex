@@ -7,12 +7,13 @@ defmodule BinDayAsAServiceWeb.PageController do
 
   def postcode_search(conn, %{"postcode" => postcode}) do
     if PostcodeValidation.valid_ns_postcode?(postcode) do
-      bin_details =
-        postcode
-        |> CouncilBinsSite.get_collection_dates()
-        |> inspect()
+      case postcode |> CouncilBinsSite.get_collection_dates() do
+        :postcode_not_found ->
+          render(conn, "error.html", error_string: "Postcode not found")
 
-      render(conn, "postcode_search.html", bin_detail_string: bin_details)
+        bin_details ->
+          render(conn, "postcode_search.html", bin_detail_string: bin_details |> IO.inspect())
+      end
     else
       render(conn, "error.html", error_string: "Invalid postcode")
     end
