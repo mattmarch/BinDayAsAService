@@ -6,7 +6,6 @@ defmodule CouncilBinsSite do
   @collection_schedule_path "/Waste/CollectionSchedule"
 
   def get_collection_dates(postcode) do
-    HTTPoison.start()
     collection_schedule_url = @base_url <> @collection_schedule_path
     cookies = Requests.get_cookies(collection_schedule_url)
 
